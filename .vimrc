@@ -259,6 +259,9 @@ noremap <space>ga :w<CR>:Git add %<bar>echom "Added" expand("%")<CR>
 " Commit with buffer prompt for msg
 noremap <space>gc :Git commit -v<CR>
 
+" Remap space gp to basic push
+noremap <space>gp :Git push<CR>
+
 " Simple Git log
 noremap <space>gl :Git log --pretty=format:'%h %ad %s (%an)' --date=short<CR>
 
