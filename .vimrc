@@ -190,7 +190,7 @@ let mapleader = 'ù'
 noremap j gj
 noremap k gk
 
-" Remqp Q to A
+" Remap Q to A (I often missclick and don't really use Q anyway)
 nmap Q A
 
 " map space to select a word
@@ -202,6 +202,10 @@ map <F1> :w<CR>:so %<CR>
 :set guitablabel=%N\ %f
 
 " Mapping tabs and listing
+" t[h/g] moveto[next/previous] tabs
+" ty show all tabs
+" tt close current tab
+" Ctrl t to create a new tab
 nnoremap ty :tabs<CR>
 nnoremap th :tabnext<CR>
 nnoremap tg :tabprev<CR>
@@ -247,10 +251,19 @@ inoremap {;<CR> {<CR>};<ESC>O
 """"""""""""""""""""""""
 
 " Launch fugitive's gstatus
-noremap <leader>gs :Gstatus<cr>
+noremap <leader>gs :Git<CR>
+
+" Add curent buffer to repo
+noremap <leader>ga :w<CR>:Git add %<bar>echom "Added" expand("%")<CR>
+
+" Commit with buffer prompt for msg
+noremap <leader>gc :Git --paginate commit -F<CR>
+
+" Simple Git log
+noremap <leader>gl :Git log --pretty=format:'%h %ad %s (%an)' --date=short<CR>
 
 " Mappings for vim-test
-nmap <silent> <leader>ts :TestSuite<cr>
+nmap <silent> <leader>ts :TestSuite<CR>
 
 " Display a short path
 let g:airline_stl_path_style = 'short'
