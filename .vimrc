@@ -257,7 +257,7 @@ noremap <leader>gs :Git<CR>
 noremap <leader>ga :w<CR>:Git add %<bar>echom "Added" expand("%")<CR>
 
 " Commit with buffer prompt for msg
-noremap <leader>gc :Git --paginate commit -F<CR>
+noremap <leader>gc :Git commit -v<CR>
 
 " Simple Git log
 noremap <leader>gl :Git log --pretty=format:'%h %ad %s (%an)' --date=short<CR>
