@@ -214,7 +214,8 @@ nnoremap <C-t> :tabnew<CR>
 inoremap <C-t> <Esc>:tabnew<CR>
 
 " Ctrl S to save all tabs and go back to the first one
-nnoremap <C-S> :tabdo w <bar> :tabfirst<CR>
+let curr_tab=tabpagenr()
+nnoremap <C-S> :tabdo w <bar><Esc> :execute curr_tab .. "gt"<CR>
 
 " Map easy move to new tab on azerty
 " Change t<symbol> to t<number> on qwerty
