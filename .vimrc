@@ -251,19 +251,19 @@ inoremap {;<CR> {<CR>};<ESC>O
 """"""""""""""""""""""""
 
 " Launch fugitive's gstatus
-noremap <leader>gs :Git<CR>
+noremap <space>gs :Git<CR>
 
 " Add curent buffer to repo
-noremap <leader>ga :w<CR>:Git add %<bar>echom "Added" expand("%")<CR>
+noremap <space>ga :w<CR>:Git add %<bar>echom "Added" expand("%")<CR>
 
 " Commit with buffer prompt for msg
-noremap <leader>gc :Git commit -v<CR>
+noremap <space>gc :Git commit -v<CR>
 
 " Simple Git log
-noremap <leader>gl :Git log --pretty=format:'%h %ad %s (%an)' --date=short<CR>
+noremap <space>gl :Git log --pretty=format:'%h %ad %s (%an)' --date=short<CR>
 
 " Mappings for vim-test
-nmap <silent> <leader>ts :TestSuite<CR>
+nmap <silent> <space>ts :TestSuite<CR>
 
 " Display a short path
 let g:airline_stl_path_style = 'short'
