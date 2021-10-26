@@ -47,6 +47,11 @@ Plug 'janko/vim-test'
 
 call plug#end()
 
+"""""""""""""
+" CMD stuff "
+"""""""""""""
+command! -nargs=1 Silent execute ':silent !'.<q-args> | execute ':redraw!'
+
 
 " Reload a file when it is changed from the outside
 set autoread
@@ -70,6 +75,8 @@ set hidden
 " automatically detected "rxvt-unicode-256color" doesn't work.
 set term=xterm-256color
 
+" zsh term
+autocmd vimenter * let &shell='/bin/zsh -i'
 
 
 """"""""""""
@@ -217,6 +224,9 @@ inoremap <C-t> <Esc>:tabnew<CR>
 let curr_tab=tabpagenr()
 nnoremap <C-S> :tabdo w <bar><Esc> :execute curr_tab .. "gt"<CR>
 
+" <space>cl to apply .clang-format
+nnoremap <space>cl :Silent clfe<CR>
+
 " Map easy move to new tab on azerty
 " Change t<symbol> to t<number> on qwerty
 nnoremap t& 1gt
@@ -238,6 +248,9 @@ noremap <leader>cw :botright :cw<cr>
 
 " Run make silently, then skip the 'Press ENTER to continue'
 noremap <leader>m :silent! :make! \| :redraw!<cr>
+
+" Run clanf-format-epita silently
+noremap <space>c :Silent !clfe<cr>
 
 " Map auto closing char (comas, braces, etc)
 inoremap ( ()<left>
