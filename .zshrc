@@ -34,6 +34,38 @@ alias ls='ls --color=auto'
 
 DISABLE_LS_COLORS=false
 
+# check if wdir is a git repository and has a clang-format configuration
+# if it has one, runs clang-format on .c and .h files.
+# otherwise try to cp one from $HOME
+
+die() {
+    printf "\033[0;31m${@}\033[0m\n"
+    exit 1
+}
+
+clfe() {
+    repo="$(git rev-parse --show-toplevel 2>/dev/null)"
+
+    if test "$?" -ne 0; then
+        die "You must run this script from the work tree of a git repository"
+    fi
+
+    clang_format_file="${repo}/.clang-format"
+
+    if ! test -f "${clang_format_file}"; then
+        echo "Failed to find clang-format configuration at ${clang_format_file}"
+        echo "Trying to cp $HOME/.clang-format ..."
+
+        if ! test -f "$HOME/.clang-format"; then
+            die "Failed to find clang-format configuration in $HOME"
+        fi
+
+        cp "$HOME/.clang-format" "$repo" && echo "Successfully copied .clang-format"
+    fi
+
+    find "$repo" -type f -name '*.[ch]' -exec clang-format --style=file -i {} ';' &&
+        echo "Finished executing clang-format configuration."
+}
 
 # Set up serverx
 export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0
