@@ -201,13 +201,8 @@ noremap k gk
 " Remap Q to A (I often missclick and don't really use Q anyway)
 nmap Q A
 
-" map space to select a word
-nmap <space> viw
-
 " Map F1 to source current buffer
 map <F1> :w<CR>:so %<CR>
-
-:set guitablabel=%N\ %f
 
 " Mapping tabs and listing
 " t[h/g] moveto[next/previous] tabs
@@ -279,6 +274,15 @@ noremap <space>gp :Git push<CR>
 
 " Simple Git log
 noremap <space>gl :Git log --pretty=format:'%h %ad %s (%an)' --date=short<CR>
+
+" Function to tag the last commit from user input
+function GitTag()
+    call inputsave()
+    let tagName=input('Tag name: ')
+    call inputrestore()
+    :redraw
+    echom 'git tag -a ' . tagName . '-m "Tag"'
+endfunction
 
 " Mappings for vim-test
 nmap <silent> <space>ts :TestSuite<CR>
