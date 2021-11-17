@@ -50,8 +50,9 @@ call plug#end()
 """""""""""""
 " CMD stuff "
 """""""""""""
-command! -nargs=1 Silent execute ':silent !'.<q-args> | execute ':redraw!'
 
+" Silently execute any command and redraw buffers
+command! -nargs=1 Silent execute ':silent !'.<q-args> | execute ':redraw!'
 
 " Reload a file when it is changed from the outside
 set autoread
@@ -285,17 +286,19 @@ nmap <silent> <space>ts :TestSuite<CR>
 " Display a short path
 let g:airline_stl_path_style = 'short'
 
-" use ascii symnols for status bar
-let g:airline_symbols_ascii = 1
-
+" Create the vim airline symbols directory (if it doesn't exist yet)
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
+"
+" use ascii symnols for status bar
+let g:airline_symbols_ascii = 1
 
 " airline theme
 let g:airline_theme = 'jellybeans'
 
 " tabline.vim plugin add close button on tab
+" it's ugly af nvm
 "let g:tablineclosebutton=1
 
 let g:jellybeans_background_color_256='232'
