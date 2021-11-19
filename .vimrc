@@ -281,10 +281,12 @@ function GitTag()
     let tagName=input('Tag name: ')
     call inputrestore()
     :redraw
-    let cmd='git tag -a "' . tagName . '" -m "Tag"'
-    " :Silent cmd
-    !git tag
+    " let cmd='git tag -a "' . tagName . '" -m "Tag"'
+    let cmd=' -a "' . tagName . '" -m "Tag"'
+    :execute 'Git tag' cmd
 endfunction
+
+noremap <space>T :call GitTag()<CR>
 
 " Mappings for vim-test
 nmap <silent> <space>ts :TestSuite<CR>
