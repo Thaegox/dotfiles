@@ -54,8 +54,6 @@ alias gs='git status'
 alias glh='git lg | head'
 alias trish='python /tmp/pip-req-build-ymj_jvld/trish.py'
 alias GCC='gcc -Wall -Wextra -Werror -std=c99 -pedantic'
-alias mid='python3 /home/geox/ing1/acdc/camoulette-tests-suites/mouli.py midterm.2026'
-alias fck='python3 /home/geox/ing1/acdc/camoulette-tests-suites/mouli.py tp.04'
 
 DISABLE_LS_COLORS=false
 
