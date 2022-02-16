@@ -34,7 +34,16 @@ bindkey -v
 # :peeposhy:
 prompt adam2
 
+# ugly but menfou
 eval $(ssh-agent)
+
+# Start Docker daemon automatically when logging in if not running.
+RUNNING=`ps aux | grep dockerd | grep -v grep`
+
+if [ -z "$RUNNING" ]; then
+    sudo dockerd > /dev/null 2>&1 &
+    disown
+fi
 
 # ls colors
 eval $(dircolors -p | sed -e 's/DIR 01;34/DIR 01;35/' | dircolors /dev/stdin)
