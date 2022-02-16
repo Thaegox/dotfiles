@@ -122,10 +122,8 @@ clfe() {
     }
 
 # Set up serverx
-export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0
+export DISPLAY=$(ip route | awk '/^default/{print $3; exit}'):0.0
 export LIBGL_ALWAYS_INDIRECT=1
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 
 FLAGS() {
     echo "-Wall -Wextra -Werror -std=c99 -pedantic"
