@@ -28,6 +28,10 @@ Plug 'preservim/nerdcommenter'
 " quickfix buffer
 Plug 'romainl/vim-qf'
 
+" Haskell specific plugins
+Plug 'neovimhaskell/haskell-vim'
+Plug 'alx741/vim-hindent'
+
 " Tab number and only shows basename
 Plug 'mkitt/tabline.vim'
 
@@ -43,7 +47,13 @@ Plug 'vim-airline/vim-airline-themes'
 " 'IDE' features
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-dispatch'
-Plug 'janko/vim-test'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'iRyukizo/tiger-syntax'
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 
 call plug#end()
 
@@ -71,6 +81,9 @@ set noswapfile
 
 " Hide buffers instead of closing them
 set hidden
+
+" default is too slow (4000ms)
+set updatetime=300
 
 " For some stupid reason, vim requires the term to begin with "xterm", so the
 " automatically detected "rxvt-unicode-256color" doesn't work.
@@ -201,8 +214,38 @@ noremap k gk
 " Remap Q to A (I often missclick and don't really use Q anyway)
 nmap Q A
 
+" Remap space to enter in normal (usefull for tree)
+noremap <space> <CR>
+
+" Remove all trailing whitespace by pressing F5
+nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+
 " Map F1 to source current buffer
 map <F1> :w<CR>:so %<CR>
+
+" From https://github.com/neoclide/coc.nvim
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+" let g:asyncomplete_auto_popup = 0
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ asyncomplete#force_refresh()
+
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+set completeopt=menuone,noinsert,noselect,preview
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+
+:set guitablabel=%N\ %f
 
 " Mapping tabs and listing
 " t[h/g] moveto[next/previous] tabs
@@ -217,6 +260,7 @@ nnoremap <C-t> :tabnew<CR>
 inoremap <C-t> <Esc>:tabnew<CR>
 
 " Ctrl S to save all tabs and go back to the first one
+" TODO: fix it
 let curr_tab=tabpagenr()
 nnoremap <C-S> :tabdo w <bar><Esc> :execute curr_tab .. "gt"<CR>
 
@@ -275,20 +319,9 @@ noremap <space>gp :Git push<CR>
 " Simple Git log
 noremap <space>gl :Git log --pretty=format:'%h %ad %s (%an)' --date=short<CR>
 
-" Function to tag the last commit from user input
-function GitTag()
-    call inputsave()
-    let tagName=input('Tag name: ')
-    call inputrestore()
-    :redraw
-    let cmd=' -a "' . tagName . '" -m "Tag"'
-    :execute 'Git' 'tag' cmd
-endfunction
-
-noremap <space>T :call GitTag()<CR>
-
 " Mappings for vim-test
-nmap <silent> <space>ts :TestSuite<CR>
+" Uncomment if using vim test
+" nmap <silent> <space>ts :TestSuite<CR>
 
 " Display a short path
 let g:airline_stl_path_style = 'short'
@@ -330,4 +363,3 @@ let g:airline_symbols.paste = '∥'
 let g:airline_symbols.spell = 'Ꞩ'
 let g:airline_symbols.notexists = 'Ɇ'
 let g:airline_symbols.whitespace = 'Ξ'
-ok
